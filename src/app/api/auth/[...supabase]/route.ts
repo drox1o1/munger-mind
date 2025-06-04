@@ -1,4 +1,5 @@
-import { handleAuth } from '@supabase/auth-helpers-nextjs';
+export async function GET() {
+  return new Response('Not implemented', { status: 501 });
+}
 
-export const GET = handleAuth();
-export const POST = handleAuth(); 
+export const POST = GET;

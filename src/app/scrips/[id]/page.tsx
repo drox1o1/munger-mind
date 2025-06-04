@@ -2,7 +2,6 @@ import { JournalGrid } from '@/components/journal/JournalGrid';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Star, Share2, Bookmark } from 'lucide-react';
-import { useState } from 'react';
 
 interface ScripDetailPageProps {
   params: {

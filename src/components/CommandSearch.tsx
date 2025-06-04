@@ -7,7 +7,7 @@ import { Plus } from 'lucide-react';
 
 export function CommandSearch() {
   const [query, setQuery] = useState('');
-  const { results, isLoading } = useSearch(query);
+  const { results } = useSearch(query);
   const { add } = useWatchlist();
 
   return (

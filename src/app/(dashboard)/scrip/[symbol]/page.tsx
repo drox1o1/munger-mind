@@ -21,7 +21,7 @@ export default async function ScripPage({ params }: PageProps) {
     prices: Object.values(daily)
       .slice(0, 30)
       .reverse()
-      .map((day: any) => parseFloat(day['4. close'])),
+      .map((day: Record<string, string>) => parseFloat(day['4. close'])),
   };
 
   return (

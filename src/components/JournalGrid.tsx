@@ -30,7 +30,7 @@ export function JournalGrid({ symbol }: { symbol: string }) {
       await add({ symbol, body: newEntry.trim() });
       setNewEntry('');
       toast.success('Journal entry added');
-    } catch (error) {
+    } catch {
       toast.error('Failed to add journal entry');
     }
   };
@@ -39,7 +39,7 @@ export function JournalGrid({ symbol }: { symbol: string }) {
     try {
       await remove(id);
       toast.success('Journal entry removed');
-    } catch (error) {
+    } catch {
       toast.error('Failed to remove journal entry');
     }
   };

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { deepResearch } from '@/lib/gemini/deepResearch';
+import { getQuote } from '@/lib/alphaClient';
+import { callLLM } from '@/lib/llm';
 
 const researchParamsSchema = z.object({
   topic: z.string().min(1),
@@ -12,7 +13,9 @@ export async function GET(request: Request) {
     const topic = searchParams.get('topic');
 
     const validatedParams = researchParamsSchema.parse({ topic });
-    const report = await deepResearch(validatedParams.topic);
+    const quote = await getQuote(validatedParams.topic);
+    const prompt = `SYSTEM: You are an equity research analyst...\nDATA:${JSON.stringify(quote)}\nUSER: write report`;
+    const report = await callLLM({ prompt, maxTokens: 4096 });
 
     return NextResponse.json(
       { report },

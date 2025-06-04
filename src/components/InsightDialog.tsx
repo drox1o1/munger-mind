@@ -11,11 +11,14 @@ export function InsightDialog({ topic }: InsightDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [report, setReport] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [provider, setProvider] = useState<'gemini' | 'openai'>('gemini');
 
   const generateReport = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/deepResearch?topic=${encodeURIComponent(topic)}`);
+      const response = await fetch(
+        `/api/deepResearch?topic=${encodeURIComponent(topic)}&provider=${provider}`,
+      );
       const data = await response.json();
       setReport(data.report);
     } catch (error) {
@@ -35,11 +38,16 @@ export function InsightDialog({ topic }: InsightDialogProps) {
           <DialogTitle>AI Research Report: {topic}</DialogTitle>
         </DialogHeader>
         {!report ? (
-          <div className="flex justify-center py-8">
-            <Button
-              onClick={generateReport}
-              disabled={isLoading}
+          <div className="flex flex-col items-center gap-4 py-8">
+            <select
+              className="border rounded px-2 py-1"
+              value={provider}
+              onChange={(e) => setProvider(e.target.value as 'gemini' | 'openai')}
             >
+              <option value="gemini">Gemini</option>
+              <option value="openai">OpenAI</option>
+            </select>
+            <Button onClick={generateReport} disabled={isLoading}>
               {isLoading ? 'Generating...' : 'Generate Report'}
             </Button>
           </div>

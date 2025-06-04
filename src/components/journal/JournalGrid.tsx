@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { format } from 'date-fns';
-import { Plus, Search, SortAsc, SortDesc, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Search, Pencil, Trash2 } from 'lucide-react';
 import { JournalEntry, JournalEntryType } from '@/types/journal';
 import { JournalEntryDialog } from './JournalEntryDialog';
 

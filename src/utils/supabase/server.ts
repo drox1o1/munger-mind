@@ -1,5 +1,5 @@
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { cookies, headers } from 'next/headers';
+import { createClient } from '@supabase/supabase-js';
+import { env } from '@/env';
 
 export const supabaseServer = () =>
-  createServerSupabaseClient({ cookies, headers }); 
+  createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_ANON_KEY);

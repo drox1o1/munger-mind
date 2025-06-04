@@ -13,9 +13,8 @@ interface JournalStore {
 }
 
 type JournalState = Pick<JournalStore, "entries" | "isLoading" | "error">;
-type JournalActions = Omit<JournalStore, keyof JournalState>;
 
-export const useJournalStore = create<JournalStore>((set: (fn: (state: JournalState) => JournalState) => void, get: () => JournalState & JournalActions) => ({
+export const useJournalStore = create<JournalStore>((set: (fn: (state: JournalState) => JournalState) => void) => ({
   entries: [],
   isLoading: false,
   error: null,

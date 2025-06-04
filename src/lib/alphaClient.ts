@@ -9,7 +9,7 @@ export interface Quote {
 type Fn = 'SYMBOL_SEARCH' | 'TIME_SERIES_DAILY_ADJUSTED' | 'GLOBAL_QUOTE';
 
 // Simple in-memory cache
-const cache = new Map<string, { data: any; timestamp: number }>();
+const cache = new Map<string, { data: unknown; timestamp: number }>();
 const CACHE_TTL = 60 * 1000; // 60 seconds
 
 // Rate limiting
@@ -40,7 +40,10 @@ function refillTokens() {
   }
 }
 
-export async function alphaFetch(fn: Fn, params: Record<string, string>): Promise<any> {
+export async function alphaFetch(
+  fn: Fn,
+  params: Record<string, string>,
+): Promise<unknown> {
   refillTokens();
 
   if (RATE_LIMIT.tokens <= 0) {
@@ -80,11 +83,15 @@ export async function alphaFetch(fn: Fn, params: Record<string, string>): Promis
 }
 
 export async function searchSymbols(query: string) {
-  const data = await alphaFetch('SYMBOL_SEARCH', { keywords: query });
-  return data.bestMatches?.map((match: any) => ({
-    symbol: match['1. symbol'],
-    name: match['2. name'],
-  })) || [];
+  const data = (await alphaFetch('SYMBOL_SEARCH', {
+    keywords: query,
+  })) as { bestMatches?: Record<string, string>[] };
+  return (
+    data.bestMatches?.map((match) => ({
+      symbol: match['1. symbol'],
+      name: match['2. name'],
+    })) || []
+  );
 }
 
 export async function getDaily(symbol: string) {
